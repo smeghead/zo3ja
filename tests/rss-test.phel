@@ -1,13 +1,14 @@
-(ns domain\rss\tests
+(ns zo3-ja\rss\tests
   (:require phel\test :refer [deftest is])
-  (:require domain\rss))
+  (:require zo3-ja\rss))
 
 (deftest rss-open-test
   (let [content (php/file_get_contents (format "tests/raw-content.txt"))
-        items (rss/parse-rss content)]
-    (is (= 3 (count items)))
-    (is (= "今週の PHP 2024-03-09 〜 2024-03-15" (get-in items [0 :title])))
-    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (get-in items [0 :guid])))
-    (is (= "Mon, 18 Mar 2024 12:21:28 GMT" (get-in items [0 :pub-date])))))
+        site (rss/parse-rss content)]
+    (is (= 3 (count (site :items))))
+    (is (= "Ryo Tomidokoroさんのフィード" (site :title)))
+    (is (= "今週の PHP 2024-03-09 〜 2024-03-15" (get-in site [:items 0 :title])))
+    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (get-in site [:items 0 :guid])))
+    (is (= "Mon, 18 Mar 2024 12:21:28 GMT" (get-in site [:items 0 :pub-date])))))
 
 

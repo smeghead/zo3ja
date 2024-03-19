@@ -1,0 +1,15 @@
+(ns zo3-ja\state\tests
+  (:require phel\test :refer [deftest is])
+  (:require zo3-ja\state))
+
+(deftest state-test
+  (let [state (state/create-state {"XDG_CACHE_HOME" "/home/smeghead/cache"})]
+    (is (= "/home/smeghead/cache/zo3-ja/state.phel" (state/state-filename state)))))
+
+(deftest state-home-test
+  (let [state (state/create-state {"HOME" "/home/smeghead"})]
+    (is (= "/home/smeghead/.cache/zo3-ja/state.phel" (state/state-filename state)))))
+
+(deftest state-none-test
+  (let [state (state/create-state {})]
+    (is (= "/tmp/zo3-ja/state.phel" (state/state-filename state)))))

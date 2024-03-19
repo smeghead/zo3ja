@@ -1,0 +1,13 @@
+(ns zo3-ja\state)
+
+(defstruct state [envs])
+
+(defn create-state [envs]
+  (state envs))
+
+(defn state-filename [state]
+  (let [envs (state :envs)]
+    (cond
+      (envs "XDG_CACHE_HOME") (format "%s/zo3-ja/state.phel" (envs "XDG_CACHE_HOME"))
+      (envs "HOME") (format "%s/.cache/zo3-ja/state.phel" (envs "HOME"))
+      true "/tmp/zo3-ja/state.phel")))

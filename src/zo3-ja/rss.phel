@@ -1,0 +1,20 @@
+(ns zo3-ja\rss)
+
+(defstruct site [title items])
+
+(defstruct item [title guid pub-date])
+
+(defn- str-val [node path]
+  (str (first (php/-> node (xpath path)))))
+
+(defn parse-rss [content]
+  (let [xml (php/new \SimpleXMLElement content)
+        site-title (str-val xml "/rss/channel/title")
+        entries (php/-> xml (xpath "/rss/channel/item"))]
+    (site
+      site-title
+      (map (fn [node] (item
+                     (str-val node "title")
+                     (str-val node "guid")
+                     (str-val node "pubDate")))
+           entries))))
