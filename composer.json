@@ -1,0 +1,25 @@
+{
+    "name": "smeghead/zo3-ja",
+    "description": "simple cli RSS reader.",
+    "type": "project",
+    "require": {
+        "phel-lang/phel-lang": "^0.12.0"
+    },
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-4": {
+            "Smeghead\\PhelObento\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "smeghead",
+            "email": "smeghead7@gmail.com"
+        }
+    ],
+    "scripts": {
+        "test": [
+            "vendor/bin/phel test"
+        ]
+    }
+}

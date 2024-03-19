@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryo Tomidokoroさんのフィード]]></title><description><![CDATA[ZennのRyo Tomidokoroさん（@hanhan1978）のRSSフィードです]]></description><link>https://zenn.dev/hanhan1978</link><image><url>https://storage.googleapis.com/zenn-user-upload/avatar/9b21bf52fb.jpeg</url><title>Ryo Tomidokoroさんのフィード</title><link>https://zenn.dev/hanhan1978</link></image><generator>zenn.dev</generator><lastBuildDate>Tue, 19 Mar 2024 12:29:00 GMT</lastBuildDate><atom:link href="https://zenn.dev/hanhan1978/feed" rel="self" type="application/rss+xml"/><language><![CDATA[ja]]></language><item><title><![CDATA[今週の PHP 2024-03-09 〜 2024-03-15]]></title><description><![CDATA[PHP のメーリングリストから、気になった情報をピックアップします。
+
+ Internal
+
+ PHP: rfc:grapheme_str_split
+
+絵文字対応の str_split である grapheme_str_splitを追加しようという提案です。
+graphemeは書記素という意味です。絵文字を一つを正しく一つの書記素として分割できるということですね。
+mb_str_split ではあかんのかと思ったら、あかんようです。
+$ sapi/cli/php -r 'var_dump(mb_str_split("🙇‍♂️"));'
+array(4) {
+  [0]=&gt;
+  s...]]></description><link>https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2</link><guid isPermaLink="true">https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2</guid><pubDate>Mon, 18 Mar 2024 12:21:28 GMT</pubDate><enclosure url="https://res.cloudinary.com/zenn/image/upload/s--KWrB8NcV--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E4%25BB%258A%25E9%2580%25B1%25E3%2581%25AE%2520PHP%25202024-03-09%2520%25E3%2580%259C%25202024-03-15%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:Ryo%2520Tomidokoro%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzliMjFiZjUyZmIuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png" length="0" type="image/png"/><dc:creator>Ryo Tomidokoro</dc:creator></item><item><title><![CDATA[今週の PHP 2024-03-02 〜 2024-03-08]]></title><description><![CDATA[PHP のメーリングリストから、気になった情報をピックアップします。
+
+ Internal
+
+ [pdo_dblib] Correct TDS protocol version - Externals
+
+Sybase使ってる人が本当にいるんだ！と感動してしまった。（そこじゃない）
+誤ったProtocolバージョンを使ってしまう不具合の修正に対するご意見募集スレッドです。
+以前、SQLServerを使っていたときにFreetds周りとかをちょっと調べたことがあったのですが、結構ドキュメントが薄くて辛かった記憶があります。
+応援あるのみ。
+
+ [Discussion] grapheme cl...]]></description><link>https://zenn.dev/hanhan1978/articles/7641a6022c2662</link><guid isPermaLink="true">https://zenn.dev/hanhan1978/articles/7641a6022c2662</guid><pubDate>Sat, 09 Mar 2024 04:58:22 GMT</pubDate><enclosure url="https://res.cloudinary.com/zenn/image/upload/s--1NaCZ00O--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E4%25BB%258A%25E9%2580%25B1%25E3%2581%25AE%2520PHP%25202024-03-02%2520%25E3%2580%259C%25202024-03-08%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:Ryo%2520Tomidokoro%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzliMjFiZjUyZmIuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png" length="0" type="image/png"/><dc:creator>Ryo Tomidokoro</dc:creator></item><item><title><![CDATA[今週の PHP 2024-02-24 〜 2024-03-01]]></title><description><![CDATA[PHP のメーリングリストから、気になった情報をピックアップします。
+
+ Internal
+
+ PHP: rfc:deprecate-implicitly-nullable-types
+
+投票が開始されました。2024/3/13 までです。
+function foo(T1 $a, T2 $b = null, T3 $c) {}
+こういう形の暗黙的にnull許可になるパラメーターを排除するというRFCです。型が指定されているのにnullが入れられてしまうのは見た目にも明らかにおかしいですね。
+この挙動はPHP5との互換性を保つために許されているようなので、これが可決されるとPHP9とPHP...]]></description><link>https://zenn.dev/hanhan1978/articles/3702bf4ec66037</link><guid isPermaLink="true">https://zenn.dev/hanhan1978/articles/3702bf4ec66037</guid><pubDate>Sat, 02 Mar 2024 11:39:32 GMT</pubDate><enclosure url="https://res.cloudinary.com/zenn/image/upload/s--IFZCKYi4--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E4%25BB%258A%25E9%2580%25B1%25E3%2581%25AE%2520PHP%25202024-02-24%2520%25E3%2580%259C%25202024-03-01%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:Ryo%2520Tomidokoro%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzliMjFiZjUyZmIuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png" length="0" type="image/png"/><dc:creator>Ryo Tomidokoro</dc:creator></item></channel></rss>
