@@ -6,14 +6,20 @@
 
 (defn main [env]
   (let [config (config/create-config env)
-        site (rss/parse-rss (php/file_get_contents (first (config :feeds))))]
-    (loop [items (site :items)
-           i 0]
-      (if-not (or (empty? items) (> i 2))
-        (let [item (first items)
+        config (config/config-user-config config)
+        feeds (config :feeds)]
+    (loop [feeds feeds]
+      (if-not (empty? feeds)
+        (let [feed (first feeds)
+              site (rss/parse-rss (php/file_get_contents feed))
+              item (first (site :items))
               date (php/new \DateTimeImmutable (item :pub-date))]
-          (println (format "[%s] %s\n%s" (php/-> date (format "Y-m-d H:i:s")) (item :title) (item :guid)))
-          (recur (rest items) (inc i)))))))
+          (println (format
+                     "[%s] %s\n%s"
+                     (php/-> date (format "Y-m-d H:i:s"))
+                     (item :title)
+                     (item :guid)))
+          (recur (rest feeds)))))))
 
-(main (php/getenv))
+(main (php-array-to-map (php/getenv)))
 
