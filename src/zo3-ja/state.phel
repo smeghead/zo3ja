@@ -1,13 +1,14 @@
 (ns zo3-ja\state)
 
-(defstruct state [envs])
+(defstruct state [config])
 
-(defn create-state [envs]
-  (state envs))
+(defn create-state [config]
+  (state config))
 
-(defn state-filename [state]
-  (let [envs (state :envs)]
+(defn state-filename [state feed-url]
+  (let [envs (get-in state [:config :envs])
+        filename (format "state-%s.phel" (php/base64_encode feed-url))]
     (cond
-      (envs "XDG_CACHE_HOME") (format "%s/zo3-ja/state.phel" (envs "XDG_CACHE_HOME"))
-      (envs "HOME") (format "%s/.cache/zo3-ja/state.phel" (envs "HOME"))
-      true "/tmp/zo3-ja/state.phel")))
+      (envs "XDG_CACHE_HOME") (format "%s/zo3-ja/%s" (envs "XDG_CACHE_HOME") filename)
+      (envs "HOME") (format "%s/.cache/zo3-ja/%s" (envs "HOME") filename)
+      true (format "/tmp/zo3-ja/%s" filename))))

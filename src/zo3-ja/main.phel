@@ -1,0 +1,19 @@
+(ns zo3-ja
+  (:require zo3-ja\config)
+  (:require zo3-ja\state)
+  (:require zo3-ja\rss))
+
+
+(defn main [env]
+  (let [config (config/create-config env)
+        site (rss/parse-rss (php/file_get_contents (first (config :feeds))))]
+    (loop [items (site :items)
+           i 0]
+      (if-not (or (empty? items) (> i 2))
+        (let [item (first items)
+              date (php/new \DateTimeImmutable (item :pub-date))]
+          (println (format "[%s] %s\n%s" (php/-> date (format "Y-m-d H:i:s")) (item :title) (item :guid)))
+          (recur (rest items) (inc i)))))))
+
+(main (php/getenv))
+

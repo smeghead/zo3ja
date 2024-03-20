@@ -1,0 +1,18 @@
+(ns zo3-ja\config)
+
+(def *feeds* ["https://zenn.dev/hanhan1978/feed"])
+
+(def *cache-seconds* (* 60 60 23))
+
+(defstruct config [envs feeds cache-seconds])
+
+(defn create-config [envs]
+  (config envs *feeds* *cache-seconds*))
+
+(defn config-filename [config]
+  (let [envs (config :envs)]
+    (cond
+      (envs "XDG_CONFIG_HOME") (format "%s/zo3-ja/zo3-ja-config.phel" (envs "XDG_CONFIG_HOME"))
+      (envs "HOME") (format "%s/.config/zo3-ja/zo3-ja-config.phel" (envs "HOME"))
+      true "zo3-ja-config.phel")))
+
