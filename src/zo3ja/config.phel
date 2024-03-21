@@ -2,7 +2,7 @@
 
 (def *feeds* (var ["https://zenn.dev/hanhan1978/feed"]))
 
-(def *cache-seconds* (var (* 60 60 23)))
+(def *cache-seconds* (var (* 60 60)))
 
 (defstruct config [envs feeds cache-seconds])
 

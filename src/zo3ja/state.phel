@@ -13,7 +13,6 @@
       (envs "HOME") (format "%s/.cache/zo3ja/%s" (envs "HOME") filename)
       true (format "/tmp/zo3ja/%s" filename))))
 
-
 (defn state-valid-cache [state filename now]
   (if-not (php/file_exists filename)
     false

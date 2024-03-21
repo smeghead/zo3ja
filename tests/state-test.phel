@@ -35,7 +35,7 @@
         state (state/create-state config)
         filename "exists-file"
         now 1711020799]
-    (php/touch filename (- now (* 60 60 23) 1))
+    (php/touch filename (- now (* 60 60) 1))
     (is (= false (state/state-valid-cache state filename now)))))
 
 (deftest valid-cache-old-cache-test
@@ -44,5 +44,5 @@
         state (state/create-state config)
         filename "exists-file"
         now 1711020799]
-    (php/touch filename (- now (* 60 60 23) -1))
+    (php/touch filename (- now (* 60 60) -1))
     (is (= true (state/state-valid-cache state filename now)))))
