@@ -29,8 +29,8 @@
           (println (format
                      "[%s] %s - %s -\n%s"
                      (php/-> date (format "Y-m-d H:i:s"))
-                     (site :title)
                      (item :title)
+                     (site :title)
                      (item :guid)))
           (recur (rest feeds)))))))
 
