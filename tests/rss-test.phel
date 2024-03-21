@@ -1,6 +1,6 @@
-(ns zo3-ja\rss\tests
+(ns zo3ja\rss\tests
   (:require phel\test :refer [deftest is])
-  (:require zo3-ja\rss))
+  (:require zo3ja\rss))
 
 (deftest rss-open-test
   (let [content (php/file_get_contents (format "tests/raw-content.txt"))

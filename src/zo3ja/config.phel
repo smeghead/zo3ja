@@ -1,4 +1,4 @@
-(ns zo3-ja\config)
+(ns zo3ja\config)
 
 (def *feeds* (var ["https://zenn.dev/hanhan1978/feed"]))
 
@@ -7,23 +7,20 @@
 (defstruct config [envs feeds cache-seconds])
 
 (defn create-config [envs]
-  (config envs (deref *feeds*) *cache-seconds*))
+  (config envs (deref *feeds*) (deref *cache-seconds*)))
 
 (defn config-filename [config]
   (let [envs (config :envs)]
     (cond
-      (envs "XDG_CONFIG_HOME") (format "%s/zo3-ja/zo3-ja-config.phel" (envs "XDG_CONFIG_HOME"))
-      (envs "HOME") (format "%s/.config/zo3-ja/zo3-ja-config.phel" (envs "HOME"))
-      true "zo3-ja-config.phel")))
+      (envs "XDG_CONFIG_HOME") (format "%s/zo3ja/zo3ja-config.phel" (envs "XDG_CONFIG_HOME"))
+      (envs "HOME") (format "%s/.config/zo3ja/zo3ja-config.phel" (envs "HOME"))
+      true "zo3ja-config.phel")))
 
 (defn config-user-config [config]
   (let [filename (config-filename config)]
-    (println filename)
-    (println (php/file_exists filename))
     (if (php/file_exists filename)
       (let [content (php/file_get_contents filename)
             form (read-string content)]
         (eval form)
-        (println (deref *feeds*))
         (create-config (config :envs)))
       config)))

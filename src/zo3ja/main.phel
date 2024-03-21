@@ -1,0 +1,38 @@
+(ns zo3ja
+  (:require zo3ja\config)
+  (:require zo3ja\state)
+  (:require zo3ja\rss))
+
+(defn get-site [config feed-url]
+  (let [state (state/create-state config)
+        filename (state/state-filename state feed-url)]
+    (if (state/state-valid-cache state filename (php/time))
+      (let [content (php/file_get_contents filename)]
+        (php/unserialize content))
+      (let [site (rss/parse-rss (php/file_get_contents feed-url))
+            dir (php/dirname filename)]
+        (if-not (php/is_dir dir)
+          (php/mkdir dir 0777 true))
+        (php/file_put_contents filename (php/serialize site))
+        site))))
+
+(defn main [env]
+  (let [config (config/create-config env)
+        config (config/config-user-config config)
+        feeds (config :feeds)]
+    (loop [feeds feeds]
+      (if-not (empty? feeds)
+        (let [feed-url (first feeds)
+              site (get-site config feed-url)
+              item (first (site :items))
+              date (php/new \DateTimeImmutable (item :pub-date))]
+          (println (format
+                     "[%s] %s - %s -\n%s"
+                     (php/-> date (format "Y-m-d H:i:s"))
+                     (site :title)
+                     (item :title)
+                     (item :guid)))
+          (recur (rest feeds)))))))
+
+(main (php-array-to-map (php/getenv)))
+

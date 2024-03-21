@@ -1,18 +1,18 @@
-(ns zo3-ja\config\tests
+(ns zo3ja\config\tests
   (:require phel\test :refer [deftest is])
-  (:require zo3-ja\config))
+  (:require zo3ja\config))
 
 (deftest config-filename-test
   (let [config (config/create-config {"XDG_CONFIG_HOME" "/home/smeghead/config"})]
-    (is (= "/home/smeghead/config/zo3-ja/zo3-ja-config.phel" (config/config-filename config)))))
+    (is (= "/home/smeghead/config/zo3ja/zo3ja-config.phel" (config/config-filename config)))))
 
 (deftest config-filename-home-test
   (let [config (config/create-config {"HOME" "/home/smeghead"})]
-    (is (= "/home/smeghead/.config/zo3-ja/zo3-ja-config.phel" (config/config-filename config)))))
+    (is (= "/home/smeghead/.config/zo3ja/zo3ja-config.phel" (config/config-filename config)))))
 
 (deftest config-filename-none-test
   (let [config (config/create-config {})]
-    (is (= "zo3-ja-config.phel" (config/config-filename config)))))
+    (is (= "zo3ja-config.phel" (config/config-filename config)))))
 
 (deftest config-feeds-test
   (let [config (config/create-config {"XDG_CONFIG_HOME" "/home/smeghead/config"})]

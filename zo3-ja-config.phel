@@ -1,4 +1,0 @@
-(ns some
-  (:require zo3-ja\config))
-
-(def config/*feeds* (push config/*feeds* "https://zenn.dev/naopusyu/feed"))

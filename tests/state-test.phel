@@ -1,23 +1,48 @@
-(ns zo3-ja\state\tests
+(ns zo3ja\state\tests
   (:require phel\test :refer [deftest is])
-  (:require zo3-ja\config)
-  (:require zo3-ja\state))
+  (:require zo3ja\config)
+  (:require zo3ja\state))
 
-(deftest state-test
+(deftest state-filename-test
   (let [env {"XDG_CONFIG_HOME" "/home/smeghead/config"
              "XDG_CACHE_HOME" "/home/smeghead/cache"}
         config (config/create-config env)
         state (state/create-state config)]
-    (is (= "/home/smeghead/cache/zo3-ja/state-aHR0cDovL2V4YW1wbGUuY29tL2ZlZWQ=.phel" (state/state-filename state "http://example.com/feed")))))
+    (is (= "/home/smeghead/cache/zo3ja/state-aHR0cDovL2V4YW1wbGUuY29tL2ZlZWQ=" (state/state-filename state "http://example.com/feed")))))
 
-(deftest state-home-test
+(deftest state-filename-home-test
   (let [env {"HOME" "/home/smeghead"}
         config (config/create-config env)
         state (state/create-state config)]
-    (is (= "/home/smeghead/.cache/zo3-ja/state-aHR0cDovL2V4YW1wbGUuY29tL2ZlZWQ=.phel" (state/state-filename state "http://example.com/feed")))))
+    (is (= "/home/smeghead/.cache/zo3ja/state-aHR0cDovL2V4YW1wbGUuY29tL2ZlZWQ=" (state/state-filename state "http://example.com/feed")))))
 
-(deftest state-none-test
+(deftest state-filename-none-test
   (let [env {}
         config (config/create-config env)
         state (state/create-state config)]
-    (is (= "/tmp/zo3-ja/state-aHR0cDovL2V4YW1wbGUuY29tL2ZlZWQ=.phel" (state/state-filename state "http://example.com/feed")))))
+    (is (= "/tmp/zo3ja/state-aHR0cDovL2V4YW1wbGUuY29tL2ZlZWQ=" (state/state-filename state "http://example.com/feed")))))
+
+(deftest valid-cache-no-cache-test
+  (let [env {}
+        config (config/create-config env)
+        state (state/create-state config)
+        now 1711020799]
+    (is (= false (state/state-valid-cache state "not-exists" now)))))
+
+(deftest valid-cache-old-cache-test
+  (let [env {}
+        config (config/create-config env)
+        state (state/create-state config)
+        filename "exists-file"
+        now 1711020799]
+    (php/touch filename (- now (* 60 60 23) 1))
+    (is (= false (state/state-valid-cache state filename now)))))
+
+(deftest valid-cache-old-cache-test
+  (let [env {}
+        config (config/create-config env)
+        state (state/create-state config)
+        filename "exists-file"
+        now 1711020799]
+    (php/touch filename (- now (* 60 60 23) -1))
+    (is (= true (state/state-valid-cache state filename now)))))

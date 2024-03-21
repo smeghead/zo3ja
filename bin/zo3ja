@@ -1,0 +1,4 @@
+#/usr/bin/bash
+dir=$(dirname $0)
+
+$dir/../vendor/bin/phel run $dir/../src/zo3ja/main.phel -- $*

@@ -1,4 +1,4 @@
-(ns zo3-ja\rss)
+(ns zo3ja\rss)
 
 (defstruct site [title items])
 
@@ -18,3 +18,4 @@
                      (str-val node "guid")
                      (str-val node "pubDate")))
            entries))))
+

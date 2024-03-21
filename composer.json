@@ -23,6 +23,6 @@
         ]
     },
     "bin": [
-        "bin/zo3-ja.phel"
+        "bin/zo3ja.phel"
     ]
 }
