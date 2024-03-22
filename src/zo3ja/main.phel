@@ -9,7 +9,10 @@
     (if (state/state-valid-cache state filename (php/time))
       (let [content (php/file_get_contents filename)]
         (php/unserialize content))
-      (let [site (rss/parse-rss (php/file_get_contents feed-url))
+      (let [old-build-date (if (php/file_exists filename)
+                             (let [content (php/file_get_contents filename)]
+                               ((php/unserialize content) :last-build-date)))
+            site (rss/parse-rss (php/file_get_contents feed-url) old-build-date)
             dir (php/dirname filename)]
         (if-not (php/is_dir dir)
           (php/mkdir dir 0777 true))
@@ -27,8 +30,9 @@
               item (first (site :items))
               date (php/new \DateTimeImmutable (item :pub-date))]
           (println (format
-                     "[%s] %s - %s -\n%s"
+                     "[%s] %s %s | %s\n%s"
                      (php/-> date (format "Y-m-d H:i:s"))
+                     (if (site :is-new) "\e[1;37;41m NEW \e[0m" "")
                      (item :title)
                      (site :title)
                      (item :guid)))

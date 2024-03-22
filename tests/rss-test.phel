@@ -4,11 +4,34 @@
 
 (deftest rss-open-test
   (let [content (php/file_get_contents (format "tests/raw-content.txt"))
-        site (rss/parse-rss content)]
+        site (rss/parse-rss content nil)]
     (is (= 3 (count (site :items))))
     (is (= "Ryo Tomidokoroさんのフィード" (site :title)))
+    (is (= "Tue, 19 Mar 2024 12:29:00 GMT" (site :last-build-date)))
+    (is (= true (site :is-new)))
     (is (= "今週の PHP 2024-03-09 〜 2024-03-15" (get-in site [:items 0 :title])))
     (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (get-in site [:items 0 :guid])))
     (is (= "Mon, 18 Mar 2024 12:21:28 GMT" (get-in site [:items 0 :pub-date])))))
 
 
+(deftest rss-open-same-content-test
+  (let [content (php/file_get_contents (format "tests/raw-content.txt"))
+        site (rss/parse-rss content "Tue, 19 Mar 2024 12:29:00 GMT")]
+    (is (= 3 (count (site :items))))
+    (is (= "Ryo Tomidokoroさんのフィード" (site :title)))
+    (is (= "Tue, 19 Mar 2024 12:29:00 GMT" (site :last-build-date)))
+    (is (= false (site :is-new)))
+    (is (= "今週の PHP 2024-03-09 〜 2024-03-15" (get-in site [:items 0 :title])))
+    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (get-in site [:items 0 :guid])))
+    (is (= "Mon, 18 Mar 2024 12:21:28 GMT" (get-in site [:items 0 :pub-date])))))
+
+(deftest rss-open-newer-content-test
+  (let [content (php/file_get_contents (format "tests/raw-content.txt"))
+        site (rss/parse-rss content "Tue, 18 Mar 2024 12:29:00 GMT")]
+    (is (= 3 (count (site :items))))
+    (is (= "Ryo Tomidokoroさんのフィード" (site :title)))
+    (is (= "Tue, 19 Mar 2024 12:29:00 GMT" (site :last-build-date)))
+    (is (= true (site :is-new)))
+    (is (= "今週の PHP 2024-03-09 〜 2024-03-15" (get-in site [:items 0 :title])))
+    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (get-in site [:items 0 :guid])))
+    (is (= "Mon, 18 Mar 2024 12:21:28 GMT" (get-in site [:items 0 :pub-date])))))
