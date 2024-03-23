@@ -2,6 +2,11 @@
 
 シンプルなRSSチェッカーです。
 
+## インストール
+
+```bash
+$ composer global install smeghead/zo3-ja
+```
 
 ## Run
 

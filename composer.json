@@ -24,6 +24,6 @@
         ]
     },
     "bin": [
-        "bin/zo3ja.phel"
+        "bin/zo3ja"
     ]
 }
