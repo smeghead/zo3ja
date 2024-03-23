@@ -1,4 +1,5 @@
-(ns zo3ja\config)
+(ns zo3ja\config
+  (:use Phel\Compiler\CompilerFacade))
 
 (def *feeds* (var ["https://zenn.dev/hanhan1978/feed"]))
 
@@ -20,7 +21,7 @@
   (let [filename (config-filename config)]
     (if (php/file_exists filename)
       (let [content (php/file_get_contents filename)
-            form (read-string content)]
-        (eval form)
+           cf (php/new CompilerFacade)]
+        (php/-> cf (eval content))
         (create-config (config :envs)))
       config)))

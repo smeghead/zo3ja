@@ -3,6 +3,12 @@
 シンプルなRSSチェッカーです。
 
 
+## Run
+
+```bash
+$ bin/zo3ja
+```
+
 ## カスタマイズ
 
 * 設定ファイル $HOME/.config/zo3ja/zo3ja-config.phel
@@ -10,15 +16,10 @@
 以下は、デフォルトのフィードに加えて、別のフィードを追加する例です。
 
 ```
-(let []
-  (set! config/*feeds* (push (deref config/*feeds*) "https://zenn.dev/smeghead/feed"))
-)
-```
+i(ns user-config
+  (:require zo3ja\config))
 
-## Run
-
-```bash
-$ bin/zo3ja
+(set! config/*feeds* (push (deref config/*feeds*) "https://zenn.dev/smeghead/feed"))
 ```
 
 ## Development
