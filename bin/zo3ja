@@ -6,4 +6,4 @@ else
   phel=$dir/../../../bin/phel
 fi
 
-$phel run $dir/../src/zo3ja/main.phel -- $*
+cd $dir/.. && $phel run $dir/../src/zo3ja/main.phel -- $*
