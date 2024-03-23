@@ -23,7 +23,7 @@ $ ~/.composer/vendor/bin/zo3ja
 以下は、デフォルトのフィードに加えて、別のフィードを追加する例です。
 
 ```
-i(ns user-config
+(ns user-config
   (:require zo3ja\config))
 
 (set! config/*feeds* (push (deref config/*feeds*) "https://zenn.dev/smeghead/feed"))
