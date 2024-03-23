@@ -5,13 +5,15 @@
 ## インストール
 
 ```bash
-$ composer global install smeghead/zo3-ja
+$ composer global install smeghead/zo3-ja:dev-main
 ```
 
 ## Run
 
+global にインストールされた実行ファイルを実行します。(OSにより格納されるパスは異なります)
+
 ```bash
-$ bin/zo3ja
+$ ~/.composer/vendor/bin/zo3ja
 ```
 
 ## カスタマイズ

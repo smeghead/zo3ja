@@ -1,4 +1,9 @@
 #/usr/bin/bash
-dir=$(dirname $0)
+dir=$(cd $(dirname $(readlink -f $0));pwd)
+if [ -x $dir/../vendor/bin/phel ]; then
+  phel=$dir/../vendor/bin/phel
+else
+  phel=$dir/../../../bin/phel
+fi
 
-$dir/../vendor/bin/phel run $dir/../src/zo3ja/main.phel -- $*
+$phel run $dir/../src/zo3ja/main.phel -- $*
