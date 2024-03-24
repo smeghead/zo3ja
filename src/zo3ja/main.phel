@@ -9,10 +9,10 @@
     (if (state/state-valid-cache state filename (php/time))
       (let [content (php/file_get_contents filename)]
         (php/unserialize content))
-      (let [old-last-feed (if (php/file_exists filename)
-                             (let [content (php/file_get_contents filename)]
-                               ((php/unserialize content) :last-feed)))
-            site (rss/parse-rss (php/file_get_contents feed-url) old-last-feed)
+      (let [old-latest-entry-url (if (php/file_exists filename)
+                                   (let [content (php/file_get_contents filename)]
+                                     ((php/unserialize content) :latest-entry-url)))
+            site (rss/parse-rss (php/file_get_contents feed-url) old-latest-entry-url)
             dir (php/dirname filename)]
         (if-not (php/is_dir dir)
           (php/mkdir dir 0777 true))

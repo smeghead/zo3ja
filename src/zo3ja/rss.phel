@@ -1,17 +1,17 @@
 (ns zo3ja\rss)
 
-(defstruct site [title items last-feed is-new])
+(defstruct site [title items latest-entry-url is-new])
 
 (defstruct item [title guid pub-date])
 
 (defn- str-val [node path]
   (str (first (php/-> node (xpath path)))))
 
-(defn parse-rss [content old-last-feed]
+(defn parse-rss [content old-latest-entry-url]
   (let [xml (php/new \SimpleXMLElement content)
         site-title (str-val xml "/rss/channel/title")
         entries (php/-> xml (xpath "/rss/channel/item"))
-        last-feed (str-val (first entries) "guid")]
+        latest-entry-url (str-val (first entries) "guid")]
     (site
       site-title
       (map (fn [node] (item
@@ -19,6 +19,6 @@
                      (str-val node "guid")
                      (str-val node "pubDate")))
            entries)
-      last-feed
-      (not= last-feed old-last-feed))))
+      latest-entry-url
+      (not= latest-entry-url old-latest-entry-url))))
 

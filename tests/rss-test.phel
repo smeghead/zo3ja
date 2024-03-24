@@ -7,7 +7,7 @@
         site (rss/parse-rss content nil)]
     (is (= 3 (count (site :items))))
     (is (= "Ryo Tomidokoroさんのフィード" (site :title)))
-    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (site :last-feed)))
+    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (site :latest-entry-url)))
     (is (= true (site :is-new)))
     (is (= "今週の PHP 2024-03-09 〜 2024-03-15" (get-in site [:items 0 :title])))
     (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (get-in site [:items 0 :guid])))
@@ -19,7 +19,7 @@
         site (rss/parse-rss content "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2")]
     (is (= 3 (count (site :items))))
     (is (= "Ryo Tomidokoroさんのフィード" (site :title)))
-    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (site :last-feed)))
+    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (site :latest-entry-url)))
     (is (= false (site :is-new)))
     (is (= "今週の PHP 2024-03-09 〜 2024-03-15" (get-in site [:items 0 :title])))
     (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (get-in site [:items 0 :guid])))
@@ -30,7 +30,7 @@
         site (rss/parse-rss content "https://zenn.dev/hanhan1978/articles/old")]
     (is (= 3 (count (site :items))))
     (is (= "Ryo Tomidokoroさんのフィード" (site :title)))
-    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (site :last-feed)))
+    (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (site :latest-entry-url)))
     (is (= true (site :is-new)))
     (is (= "今週の PHP 2024-03-09 〜 2024-03-15" (get-in site [:items 0 :title])))
     (is (= "https://zenn.dev/hanhan1978/articles/2426e74e1c1bb2" (get-in site [:items 0 :guid])))
