@@ -29,20 +29,22 @@
         now 1711020799]
     (is (= false (state/state-valid-cache state "not-exists" now)))))
 
-(deftest valid-cache-old-cache-test
+(deftest valid-cache-old-cache-is-out-date-test
   (let [env {}
         config (config/create-config env)
         state (state/create-state config)
-        filename "exists-file"
+        filename (format "%s/exists-file" __DIR__)
         now 1711020799]
     (php/touch filename (- now (* 60 60) 1))
+    (php/clearstatcache)
     (is (= false (state/state-valid-cache state filename now)))))
 
-(deftest valid-cache-old-cache-test
+(deftest valid-cache-old-cache-is-enough-new-test
   (let [env {}
         config (config/create-config env)
         state (state/create-state config)
-        filename "exists-file"
+        filename (format "%s/exists-file" __DIR__)
         now 1711020799]
     (php/touch filename (- now (* 60 60) -1))
+    (php/clearstatcache)
     (is (= true (state/state-valid-cache state filename now)))))
