@@ -8,7 +8,7 @@
 $ composer global require smeghead/zo3-ja:dev-main
 ```
 
-## Run
+## 実行方法
 
 global にインストールされた実行ファイルを実行します。(OSにより格納されるパスは異なります)
 
