@@ -5,7 +5,7 @@
 ## インストール
 
 ```bash
-$ composer global require smeghead/zo3-ja:dev-main
+$ composer global require smeghead/zo3-ja
 ```
 
 ## 実行方法
