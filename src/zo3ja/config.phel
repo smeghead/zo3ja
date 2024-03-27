@@ -22,6 +22,10 @@
     (if (php/file_exists filename)
       (let [content (php/file_get_contents filename)
            cf (php/new CompilerFacade)]
-        (php/-> cf (eval content))
+        (try
+          (php/-> cf (eval content))
+          (catch \Throwable e
+            (println
+              (format "\033[31mERROR\033[m: fail to read user config file. %s" (php/-> e (getMessage))))))
         (create-config (config :envs)))
       config)))
