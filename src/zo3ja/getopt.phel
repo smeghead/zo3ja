@@ -1,0 +1,26 @@
+(ns zo3ja\getopt)
+
+(defstruct option [c v h])
+(defstruct options [option args])
+
+(defn- parse-args [args]
+  (loop [args args]
+    (if-not (empty? args)
+      (if (= (first args) "--")
+        (rest (rest args))
+        (recur (rest args))))))
+
+(defn- short-flag [name args]
+  (not (empty? (find (fn [x] (= (format "-%s" name) x)) args))))
+
+(defn- pickup-args [args]
+  (filter (fn [x] (not= (php/substr x 0 1) "-")) args))
+
+(defn getopt [args]
+  (let [args (parse-args args)
+        option (option
+                 (short-flag "c" args)
+                 (short-flag "v" args)
+                 (short-flag "h" args))
+        options (options option (pickup-args args))]
+    options))
