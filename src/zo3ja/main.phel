@@ -1,9 +1,18 @@
 (ns zo3ja
+  (:require zo3ja\getopt)
   (:require zo3ja\config)
   (:require zo3ja\state)
   (:require zo3ja\rss))
 
-(defn get-site [config feed-url]
+(def *version* "v0.0.2")
+(def *usage* "usage:
+zo3ja       ... 最新のエントリを表示します。
+zo3ja -v    ... バージョンを表示します。
+zo3ja -c    ... 設定ファイルのパスを表示します。
+zo3ja -h    ... ヘルプを表示します。
+")
+
+(defn- get-site [config feed-url]
   (let [state (state/create-state config)
         filename (state/state-filename state feed-url)]
     (if (state/state-valid-cache state filename (php/time))
@@ -19,7 +28,7 @@
         (php/file_put_contents filename (php/serialize site))
         site))))
 
-(defn main [env]
+(defn- display-feeds [env]
   (let [config (config/create-config env)
         config (config/config-user-config config)
         feeds (config :feeds)]
@@ -38,5 +47,17 @@
                      (item :guid)))
           (recur (rest feeds)))))))
 
-(main (php-array-to-map (php/getenv)))
+(defn main [env args]
+  (let [options (getopt/getopt args)]
+    (cond
+      (get-in options [:option :v]) (println (format "zo3ja version: %s" *version*))
+      (get-in options [:option :c]) (let [config (config/create-config env)]
+                                      (println (format "zo3ja config filename: %s" (config/config-filename config))))
+      (get-in options [:option :h]) (println (format "%s" *usage*))
+      true (display-feeds env))))
+
+
+(main
+  (php-array-to-map (php/getenv))
+  (values (php-array-to-map argv)))
 

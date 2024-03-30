@@ -20,6 +20,12 @@ $ ~/.config/composer/vendor/bin/zo3ja
 
 * 設定ファイル $HOME/.config/zo3ja/zo3ja-config.phel
 
+`-c`を指定して`zo3ja`を実行すると設定ファイルのパスを表示します。
+
+```
+$ ~/.config/composer/vendor/bin/zo3ja -c
+```
+
 以下は、デフォルトのフィードに加えて、別のフィードを追加する例です。
 
 ```

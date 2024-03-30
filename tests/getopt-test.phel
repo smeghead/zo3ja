@@ -1,0 +1,36 @@
+(ns zo3ja\getopt\tests
+  (:require phel\test :refer [deftest is])
+  (:require zo3ja\getopt))
+
+(deftest getopt-no-args-test
+  (let [args ["phel" "bin/zo3ja"]
+        options (getopt/getopt args)]
+    (is (= false (get-in options [:option :c])))
+    (is (= false (get-in options [:option :v])))
+    (is (= false (get-in options [:option :h])))
+    (is (= [] (options :args)))))
+
+(deftest getopt-phelの引数として扱われるので引数は無いものとする
+  (let [args ["phel" "bin/zo3ja" "-c" "-h"]
+        options (getopt/getopt args)]
+    (is (= false (get-in options [:option :c])))
+    (is (= false (get-in options [:option :v])))
+    (is (= false (get-in options [:option :h])))
+    (is (= [] (options :args)))))
+
+(deftest getopt-二重のハイフンの後を引数として解析する
+  (let [args ["phel" "--" "bin/zo3ja" "-c" "-h"]
+        options (getopt/getopt args)]
+    (is (= true (get-in options [:option :c])))
+    (is (= false (get-in options [:option :v])))
+    (is (= true (get-in options [:option :h])))
+    (is (= [] (options :args)))))
+
+(deftest getopt-argsの解析ができること
+  (let [args ["phel" "--" "bin/zo3ja" "arg1" "arg2"]
+        options (getopt/getopt args)]
+    (is (= false (get-in options [:option :c])))
+    (is (= false (get-in options [:option :v])))
+    (is (= false (get-in options [:option :h])))
+    (is (= ["arg1" "arg2"] (options :args)))))
+
