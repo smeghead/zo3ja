@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### Bug fix
+
+ * コードの微修正
+
 ## v0.0.2 (2024-03-30)
 
 ### Features

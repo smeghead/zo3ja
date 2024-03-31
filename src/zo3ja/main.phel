@@ -29,8 +29,7 @@ zo3ja -h    ... ヘルプを表示します。
         site))))
 
 (defn- display-feeds [env]
-  (let [config (config/create-config env)
-        config (config/config-user-config config)
+  (let [config (config/config-user-config (config/create-config env))
         feeds (config :feeds)]
     (loop [feeds feeds]
       (if-not (empty? feeds)
@@ -47,15 +46,19 @@ zo3ja -h    ... ヘルプを表示します。
                      (item :guid)))
           (recur (rest feeds)))))))
 
-(defn main [env args]
-  (let [options (getopt/getopt args)]
-    (cond
-      (get-in options [:option :v]) (println (format "zo3ja version: %s" *version*))
-      (get-in options [:option :c]) (let [config (config/create-config env)]
-                                      (println (format "zo3ja config filename: %s" (config/config-filename config))))
-      (get-in options [:option :h]) (println (format "%s" *usage*))
-      true (display-feeds env))))
+(defn- print-error [& args]
+  # 本当は標準エラー出力に表示したいが、標準エラー出力だけに出力して終了するとエラーが表示される。それを回避するために標準出力に表示している。
+  #(php/fwrite php/STDERR (apply format args))
+  (print (apply format args)))
 
+(defn main [env args]
+  (let [options (getopt/getopt args)
+        option (options :option)]
+    (cond
+      (option :v) (print-error "zo3ja version: %s\n" *version*)
+      (option :c) (print-error "zo3ja config filename: %s\n" (config/config-filename (config/create-config env)))
+      (option :h) (print-error "%s\n" *usage*)
+      true (display-feeds env))))
 
 (main
   (php-array-to-map (php/getenv))

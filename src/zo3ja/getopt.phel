@@ -17,10 +17,10 @@
   (filter (fn [x] (not= (php/substr x 0 1) "-")) args))
 
 (defn getopt [args]
-  (let [args (parse-args args)
-        option (option
-                 (short-flag "c" args)
-                 (short-flag "v" args)
-                 (short-flag "h" args))
-        options (options option (pickup-args args))]
-    options))
+  (let [args (parse-args args)]
+    (options
+      (option
+        (short-flag "c" args)
+        (short-flag "v" args)
+        (short-flag "h" args))
+      (pickup-args args))))
