@@ -16,11 +16,9 @@ zo3ja -h    ... ヘルプを表示します。
   (let [state (state/create-state config)
         filename (state/state-filename state feed-url)]
     (if (state/state-valid-cache state filename (php/time))
-      (let [content (php/file_get_contents filename)]
-        (php/unserialize content))
+      (php/unserialize (php/file_get_contents filename))
       (let [old-latest-entry-url (if (php/file_exists filename)
-                                   (let [content (php/file_get_contents filename)]
-                                     ((php/unserialize content) :latest-entry-url)))
+                                     ((php/unserialize (php/file_get_contents filename)) :latest-entry-url))
             site (rss/parse-rss (php/file_get_contents feed-url) old-latest-entry-url)
             dir (php/dirname filename)]
         (if-not (php/is_dir dir)

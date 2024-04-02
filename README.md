@@ -26,6 +26,19 @@ $ ~/.config/composer/vendor/bin/zo3ja
 $ ~/.config/composer/vendor/bin/zo3ja -c
 ```
 
+### 設定項目
+
+#### RSSフィードリスト `zo3ja\config\*feeds*` 
+
+チェックするフィードURLの一覧(`Vector`)です。この変数にフィードURLを追加することでチェックするフィードを追加できます。
+
+#### キャッシュの有効期限 `zo3ja\config\*cache-seconds*`
+
+取得したRSSフィードの情報を一定時間キャッシュします。キャッシュの時間を秒で指定することができます。
+デフォルトは1時間です。
+
+### 設定例
+
 以下は、デフォルトのフィードに加えて、別のフィードを追加する例です。
 
 ```

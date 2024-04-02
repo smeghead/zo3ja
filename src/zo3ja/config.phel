@@ -21,7 +21,7 @@
   (let [filename (config-filename config)]
     (if (php/file_exists filename)
       (let [content (php/file_get_contents filename)
-           cf (php/new CompilerFacade)]
+            cf (php/new CompilerFacade)]
         (try
           (php/-> cf (eval content))
           (catch \Throwable e
