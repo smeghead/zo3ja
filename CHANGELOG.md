@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### Features
+
+ * phel-lang をバージョンアップしました。 0.13
+
 ### Bug fix
 
  * コードの微修正
